@@ -13,20 +13,19 @@ Cardiac::Cardiac()
 void Cardiac::Execute(std::vector<float> &freqsIn, Mat &fftIn, 
 		float lowerLimit, float upperLimit, bool makeFiltered, char* operation)
 {
-
 	bandProcess = BandProcess(freqsIn, fftIn, lowerLimit/60.0, upperLimit/60.0, makeFiltered, operation);
 
-	
 	bandProcess.Execute();
 
 	freqs = bandProcess.freqs;
 
+	// each heartbeat for a minute
 	for(int i = 0; i < freqs.size(); i++)
 		freqs[i] =  freqs[i] * 60;
-
 	
 	pulseBuffer.push_back(bandProcess.peak_hz * 60);
 
+	// max 50 heartbeat in pulsebuffer
 	if(pulseBuffer.size() > bufferThresh)
 	{
 		pulseBuffer = std::vector<float>(pulseBuffer.begin() +1, pulseBuffer.end());
@@ -38,6 +37,7 @@ void Cardiac::Execute(std::vector<float> &freqsIn, Mat &fftIn,
 		bpmSum += pulseBuffer[i];
 	}
 
+	// mean value
 	bpm = (bpmSum / pulseBuffer.size());
 	
 	magnitude = bandProcess.magnitude;

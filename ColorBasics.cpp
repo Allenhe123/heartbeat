@@ -75,10 +75,13 @@ int run_graphs()
 {
 	while (true)
 	{
+		// preprocessed data dft, 50-160 range bpm idft result for display
 		if (filtered != nullptr && !filtered->empty())
 			showFloatGraph("Pulse", &(*filtered)[0], filtered->size(), 1,  0, 0, 425);
+		// samples in time domain
 		if (samples != nullptr && !samples->empty())
 			showFloatGraph("Samples", &(*samples)[0], samples->size(), 1,  0, 0, 425);
+		// 
 		if (mag != nullptr && !mag->empty())
 			showFloatGraph("FFT Magnitude", &(*mag)[0], mag->size(), 1, 0, 0, 425);
 	}

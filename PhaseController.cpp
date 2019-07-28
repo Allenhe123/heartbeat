@@ -9,10 +9,9 @@ PhaseController::PhaseController()
 
 PhaseController::PhaseController(float default_alpha, float default_beta, bool start_state)
 {
-	state = start_state;
-	default_a = default_alpha;
-	default_b = default_beta;
-
+	state = start_state;        // 1
+	default_a = default_alpha;  // 0
+	default_b = default_beta;   // true
 }
 
 bool PhaseController::Toggle()
@@ -37,7 +36,6 @@ void PhaseController::Off()
 {
 	 if(state)
         Toggle();
-
 }
 
 
@@ -55,8 +53,5 @@ void PhaseController::Execute(float phase)
 	{
 		beta = default_b;
 		alpha = default_a;
-	
-	
 	}
-
 }

@@ -141,10 +141,11 @@ void DetectPulse::Execute(Mat &image, Rect &face, bool faceFound, double fps)
 
 		sprintf(text, "%0.0f bpm", cardiac_.bpm);
 
-		if (buffer_fft.ready)
-		{
-			phase_controller.On();
-		}
+		// not used currently
+		//if (buffer_fft.ready)
+		//{
+		//	phase_controller.On();
+		//}
 
 		filtered = &(cardiac_.filtered);
 		samples = &(buffer_fft.interpolated);

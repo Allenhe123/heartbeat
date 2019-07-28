@@ -145,6 +145,7 @@ void BufferFFT::GetFFT()
 
 	freqs.clear();
 	
+	// do dft for these freqs
 	for(int i = 0; i < interpolated.size(); i++)
 	{
 		freqs.push_back((i * fps / interpolated.size()) / 2); 
@@ -201,6 +202,8 @@ void BufferFFT::Execute(float data_in)
 
     if(samples.size() > n_)
 	{
+		ready = true;
+
 		if (remove_all_when_full)
 		{
 			float data = samples[samples.size() - 1];

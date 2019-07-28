@@ -94,11 +94,8 @@ void BandProcess::Execute()
 			{
 				filtered.push_back(f.at<float>(i)); /// hamming[i]);
 			}
-			
 		 }
 	 }
-	 
-
 	 
 	 //error if the vector is empty
 	 if(fft.rows > 0)
@@ -107,7 +104,9 @@ void BandProcess::Execute()
 		float maxIdx = 0;
 		//blur the fft
 
+		// gauss kernel: width=1, height=15; standard deviation: x=1, y=3
 		GaussianBlur(fft,fft,Size(1,15),1,3);
+
 		Mat planes_storage = Mat::zeros(fft.rows,1, CV_32FC1 );
 		Mat planes[] = {Mat_<float>(planes_storage), Mat::zeros(fft.size(), CV_32F)};
 		
@@ -116,20 +115,16 @@ void BandProcess::Execute()
 
 		cv::magnitude(planes[0], planes[1], magnitudes);
 		
-		
 		for(int i = 0; i < magnitudes.size().height; i++)
-		{	
-									
+		{								
 			float mag = magnitudes.at<float>(i);
 			if(mag > maxVal)
 			{
 				maxVal = mag;
-				maxIdx = i;				
+				maxIdx = i;	
 			}
 			magnitude.push_back(mag);
-			
 		}
-
 
 		peak_hz = freqs[maxIdx];
 		
@@ -138,5 +133,4 @@ void BandProcess::Execute()
 		cv::phase(planes[0], planes[1], phaseArray);
 		phase = phaseArray.at<float>(maxIdx,0);
 	 }
-	 
 }
